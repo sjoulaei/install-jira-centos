@@ -69,6 +69,8 @@ server_add=${server_add:-"youraddress.com"}
 read -p "Enter your Jira server port (8080):" server_port
 server_port=${server_port:-"8080"}
 
+cp -v CONF/httpd/jira.conf /opt/rh/httpd24/root/etc/httpd/conf.d/
+
 sed -i "s|SSLCertificateFile.*|SSLCertificateFile /etc/pki/tls/certs/$ssl_crt|" /opt/rh/httpd24/root/etc/httpd/conf.d/jira.conf  && echo "cert info added to jira.conf file successfully" || echo "cert info update on jira.conf file failed"
 sed -i "s|SSLCertificateKeyFile.*|SSLCertificateKeyFile /etc/pki/tls/private/$ssl_key|" /opt/rh/httpd24/root/etc/httpd/conf.d/jira.conf  && echo "ssl key info added to jira.conf file successfully" || echo "ssl key info update on jira.conf file failed"
 sed -i "s|ServerName.*|ServerName $server_add|" /opt/rh/httpd24/root/etc/httpd/conf.d/jira.conf  && echo "ServerName added to jira.conf file successfully" || echo "ServerName update on jira.conf file failed"
@@ -79,7 +81,6 @@ sed -i "s|Redirect Permanent.*|Redirect Permanent / https://$server_add/|" /opt/
 
 
 #setup apache server
-cp -v CONF/httpd/jira.conf /opt/rh/httpd24/root/etc/httpd/conf.d/
 systemctl enable httpd24-httpd
 systemctl start httpd24-httpd 
 
