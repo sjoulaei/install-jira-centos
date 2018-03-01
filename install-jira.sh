@@ -22,7 +22,7 @@ export PGDATA=/var/lib/pgsql/data
 systemctl enable postgresql
 
 #set postgresql to accept connections
-sed -i "s|host    all             all             127.0.0.1/32.*|host    all             all             127.0.0.1/32            md5|" sudo vim /var/lib/pgsql/data/pg_hba.conf  && echo "pg_hba.conf file updated successfully" || echo "failed to pg_hba.conf"
+sed -i "s|host    all             all             127.0.0.1/32.*|host    all             all             127.0.0.1/32            md5|" /var/lib/pgsql/data/pg_hba.conf  && echo "pg_hba.conf file updated successfully" || echo "failed to update pg_hba.conf"
 
 systemctl start postgresql
 
