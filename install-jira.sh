@@ -70,6 +70,7 @@ read -p "Enter your Jira server port (8080):" server_port
 server_port=${server_port:-"8080"}
 
 cp -v CONF/httpd/jira.conf /opt/rh/httpd24/root/etc/httpd/conf.d/
+mkdir -pv /opt/rh/httpd24/root/var/www/jira/logs/
 
 sed -i "s|SSLCertificateFile.*|SSLCertificateFile /etc/pki/tls/certs/$ssl_crt|" /opt/rh/httpd24/root/etc/httpd/conf.d/jira.conf  && echo "cert info added to jira.conf file successfully" || echo "cert info update on jira.conf file failed"
 sed -i "s|SSLCertificateKeyFile.*|SSLCertificateKeyFile /etc/pki/tls/private/$ssl_key|" /opt/rh/httpd24/root/etc/httpd/conf.d/jira.conf  && echo "ssl key info added to jira.conf file successfully" || echo "ssl key info update on jira.conf file failed"
