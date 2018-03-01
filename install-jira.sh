@@ -79,6 +79,7 @@ sed -i "s|Redirect Permanent.*|Redirect Permanent / https://$server_add/|" /opt/
 
 
 #setup apache server
+cp -v CONF/httpd/jira.conf /opt/rh/httpd24/root/etc/httpd/conf.d/
 systemctl enable httpd24-httpd
 systemctl start httpd24-httpd 
 
