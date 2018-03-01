@@ -85,18 +85,18 @@ systemctl enable httpd24-httpd
 systemctl start httpd24-httpd 
 
 #download and prepare Jira
-echo -e "\033[32mDonload and prepare latest version of Jira package\033[0m"
+echo -e "\033[32mDownload and prepare latest version of Jira package\033[0m"
 read -p "Enter the version of Jira you want to install(7.8.0):" jira_ver
 jira_ver=${jira_ver:-"7.8.0"}
-read -n1
-echo
 wget https://downloads.atlassian.com/software/jira/downloads/atlassian-jira-software-$jira_ver-x64.bin
 chmod +x atlassian-jira-software-$jira_ver-x64.bin
 sh atlassian-jira-software-$jira_ver-x64.bin
 
 #add ssl certificate to java key store
-openssl s_client -connect jira.yourdomain.com:443 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > public.crt
-sudo /opt/atlassian/jira/jre/bin/keytool -import -alias $server_add -keystore /opt/atlassian/jira/jre/lib/security/cacerts -file /etc/pki/tls/certs/$ssl_crt
+echo -e "\033[32mSSL certification is going to be added to Jira java keystore\033[0m"
+read -p "What is the password for keystore(changeit):" keystore_pwd
+keystore_pwd=${keystore_pwd:-"changeit"}
+/opt/atlassian/jira/jre/bin/keytool -import -alias $server_add -keystore /opt/atlassian/jira/jre/lib/security/cacerts -storepass $keystore_pwd -file /etc/pki/tls/certs/$ssl_crt
 
 
 #reboot
